@@ -1,0 +1,15 @@
+configVersion: v1alpha1
+branchConfigs:
+
+  # =============== Lab Cluster ===============
+  - name: cluster/lab
+    appConfigs:
+      rbac-manager-helm:
+        configManagement:
+          path: charts/rbac-manager
+          helm:
+            releaseName: rbac-manager-chart
+            namespace: rbac-manager
+            valueFiles:
+              - overlays/lab/values.yaml
+        outputPath: components/rbac-manager
