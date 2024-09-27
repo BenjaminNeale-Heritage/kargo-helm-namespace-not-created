@@ -2,7 +2,7 @@ configVersion: v1alpha1
 branchConfigs:
 
   # =============== Lab Cluster ===============
-  - name: cluster/lab
+  - name: cluster/lab-add-namespace-to-templates
     appConfigs:
       rbac-manager-helm:
         configManagement:

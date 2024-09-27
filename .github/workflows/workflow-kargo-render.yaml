@@ -2,7 +2,7 @@ name: Kargo Render
 on:
   push:
     branches:
-    - main
+    - add-namespace-to-templates
 jobs:
   render-manifests:
     name: Render and Commit Manifests
@@ -13,7 +13,7 @@ jobs:
       matrix:
         targetBranch:
         # Lab Clusters
-        - cluster/lab
+        - cluster/lab-add-namespace-to-templates
     steps:
     - name: kargo-render-by-akuity
       uses: akuity/kargo-render-action@v0.1.0-rc.40
