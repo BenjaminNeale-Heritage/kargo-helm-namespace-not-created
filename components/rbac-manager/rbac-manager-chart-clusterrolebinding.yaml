@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: rbac-manager
+    chart: rbac-manager-1.21.0
+    heritage: Helm
+    release: rbac-manager-chart
+  name: rbac-manager-chart
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: rbac-manager-chart
+subjects:
+- kind: ServiceAccount
+  name: rbac-manager-chart
+  namespace: rbac-manager
