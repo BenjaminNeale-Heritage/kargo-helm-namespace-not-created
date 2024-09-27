@@ -1,0 +1,45 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: rbac-manager
+    chart: rbac-manager-1.21.0
+    heritage: Helm
+    release: rbac-manager-chart
+  name: rbac-manager-chart
+rules:
+- apiGroups:
+  - rbacmanager.reactiveops.io
+  resources:
+  - rbacdefinitions
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  - authorization.k8s.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - rbacmanager.reactiveops.io
+  resources:
+  - rbacdefinitions/finalizers
+  verbs:
+  - '*'

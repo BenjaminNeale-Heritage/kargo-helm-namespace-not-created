@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rbac-manager
+    chart: rbac-manager-1.21.0
+    heritage: Helm
+    release: rbac-manager-chart
+  name: rbac-manager-chart
+  namespace: rbac-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rbac-manager
+      release: rbac-manager-chart
+  template:
+    metadata:
+      labels:
+        app: rbac-manager
+        release: rbac-manager-chart
+    spec:
+      containers:
+      - command:
+        - /rbac-manager
+        image: registry.lab.example.com/reactiveops/rbac-manager:v1.9.0
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: 8042
+            scheme: HTTP
+        name: rbac-manager
+        ports:
+        - containerPort: 8042
+          name: http-metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /metrics
+            port: 8042
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 3
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+      securityContext: {}
+      serviceAccountName: rbac-manager-chart
